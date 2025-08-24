@@ -9,13 +9,19 @@
       font-family: Arial, sans-serif;
       margin: 20px;
       background: #f4f4f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     h1 {
       text-align: center;
     }
+    .container {
+      width: 100%;
+      max-width: 900px;
+    }
     .calculator {
-      max-width: 600px;
-      margin: auto;
+      width: 100%;
       padding: 20px;
       background: #fff;
       border-radius: 12px;
@@ -61,6 +67,10 @@
       margin-top: 20px;
       width: 100%;
       border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      overflow: hidden;
     }
     th, td {
       border: 1px solid #ccc;
@@ -81,44 +91,46 @@
 </head>
 <body>
   <h1>Profit Calculator</h1>
-  <div class="calculator">
-    <!-- Inputs -->
-    <label>Weight</label>
-    <input type="number" id="weight" placeholder="Enter weight" />
+  <div class="container">
+    <div class="calculator">
+      <!-- Inputs -->
+      <label>Weight</label>
+      <input type="number" id="weight" placeholder="Enter weight" />
 
-    <label>Unit</label>
-    <select id="unit">
-      <option value="grams">Grams</option>
-      <option value="ounces">Ounces</option>
-      <option value="pounds">Pounds</option>
-    </select>
+      <label>Unit</label>
+      <select id="unit">
+        <option value="grams">Grams</option>
+        <option value="ounces">Ounces</option>
+        <option value="pounds">Pounds</option>
+      </select>
 
-    <label>Cost per Weight Unit</label>
-    <input type="number" id="costPerUnit" placeholder="Enter cost per unit" />
+      <label>Cost per Weight Unit</label>
+      <input type="number" id="costPerUnit" placeholder="Enter cost per unit" />
 
-    <label>Markup</label>
-    <input type="number" id="markup" placeholder="Enter markup" />
-    <select id="markupType">
-      <option value="multiplier">Multiplier</option>
-      <option value="percent">Percentage</option>
-    </select>
+      <label>Markup</label>
+      <input type="number" id="markup" placeholder="Enter markup" />
+      <select id="markupType">
+        <option value="multiplier">Multiplier</option>
+        <option value="percent">Percentage</option>
+      </select>
 
-    <label>Transaction Fee %</label>
-    <input type="number" id="feePercent" placeholder="Enter fee percentage" />
+      <label>Transaction Fee %</label>
+      <input type="number" id="feePercent" placeholder="Enter fee percentage" />
 
-    <button onclick="calculate()">Calculate</button>
+      <button onclick="calculate()">Calculate</button>
 
-    <!-- Outputs -->
-    <div class="output">
-      <p><b>Total Cost:</b> $<span id="totalCost">0</span></p>
-      <p><b>Initial Price:</b> $<span id="initialPrice">0</span></p>
-      <p><b>Price per Unit Weight:</b> $<span id="pricePerUnit">0</span></p>
-      <p><b>Transaction Fee:</b> $<span id="transactionFee">0</span></p>
-      <p><b>Gross Price (Initial + Fee):</b> $<span id="grossPrice">0</span></p>
-      <p><b>Net Revenue:</b> $<span id="netRevenue">0</span></p>
-      <p><b>Fee Share (50%):</b> $<span id="feeShare">0</span></p>
-      <p><b>Net Amount Paid:</b> $<span id="netAmountPaid">0</span></p>
-      <p><b>Net Profit:</b> $<span id="netProfit">0</span></p>
+      <!-- Outputs -->
+      <div class="output">
+        <p><b>Total Cost:</b> $<span id="totalCost">0</span></p>
+        <p><b>Initial Price:</b> $<span id="initialPrice">0</span></p>
+        <p><b>Price per Unit Weight:</b> $<span id="pricePerUnit">0</span></p>
+        <p><b>Transaction Fee:</b> $<span id="transactionFee">0</span></p>
+        <p><b>Gross Price (Initial + Fee):</b> $<span id="grossPrice">0</span></p>
+        <p><b>Net Revenue:</b> $<span id="netRevenue">0</span></p>
+        <p><b>Fee Share (50%):</b> $<span id="feeShare">0</span></p>
+        <p><b>Net Amount Paid:</b> $<span id="netAmountPaid">0</span></p>
+        <p><b>Net Profit:</b> $<span id="netProfit">0</span></p>
+      </div>
     </div>
 
     <!-- Results Table -->
