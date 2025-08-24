@@ -121,7 +121,7 @@
         initialPrice = totalCost * (1 + markup / 100);
       }
 
-      // Price per weight
+      // Price per weight (2 decimals)
       const pricePerUnit = weight > 0 ? initialPrice / weight : 0;
 
       // Transaction fee
@@ -130,8 +130,8 @@
       // Gross price
       const grossPrice = initialPrice + transactionFee;
 
-      // Net revenue
-      const netRevenue = initialPrice - transactionFee;
+      // Net revenue (Gross - Fee)
+      const netRevenue = grossPrice - transactionFee;
 
       // Fee share (50%)
       const feeShare = transactionFee / 2;
@@ -145,7 +145,7 @@
       // Update results
       document.getElementById("totalCost").innerText = totalCost.toFixed(2);
       document.getElementById("initialPrice").innerText = initialPrice.toFixed(2);
-      document.getElementById("pricePerUnit").innerText = pricePerUnit.toFixed(4);
+      document.getElementById("pricePerUnit").innerText = pricePerUnit.toFixed(2);
       document.getElementById("transactionFee").innerText = transactionFee.toFixed(2);
       document.getElementById("grossPrice").innerText = grossPrice.toFixed(2);
       document.getElementById("netRevenue").innerText = netRevenue.toFixed(2);
