@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profit Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f9;
+    }
+    h1 {
+      text-align: center;
+    }
+    .calculator {
+      max-width: 500px;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px;
+      width: 100%;
+      background: #007bff;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .output {
+      margin-top: 15px;
+      padding: 10px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+    .output p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Profit Calculator</h1>
+  <div class="calculator">
+    <!-- Inputs -->
+    <label>Weight</label>
+    <input type="number" id="weight" placeholder="Enter weight" />
+
+    <label>Unit</label>
+    <select id="unit">
+      <option value="grams">Grams</option>
+      <option value="ounces">Ounces</option>
+      <option value="pounds">Pounds</option>
+    </select>
+
+    <label>Cost per Weight Unit</label>
+    <input type="number" id="costPerUnit" placeholder="Enter cost per unit" />
+
+    <label>Markup</label>
+    <input type="number" id="markup" placeholder="Enter markup" />
+    <select id="markupType">
+      <option value="multiplier">Multiplier</option>
+      <option value="percent">Percentage</option>
+    </select>
+
+    <label>Transaction Fee %</label>
+    <input type="number" id="feePercent" placeholder="Enter fee percentage" />
+
+    <button onclick="calculate()">Calculate</button>
+
+    <!-- Outputs -->
+    <div class="output">
+      <p><b>Total Cost:</b> $<span id="totalCost">0</span></p>
+      <p><b>Initial Price:</b> $<span id="initialPrice">0</span></p>
+      <p><b>Price per Unit Weight:</b> $<span id="pricePerUnit">0</span></p>
+      <p><b>Transaction Fee:</b> $<span id="transactionFee">0</span></p>
+      <p><b>Gross Price (Initial + Fee):</b> $<span id="grossPrice">0</span></p>
+      <p><b>Net Revenue:</b> $<span id="netRevenue">0</span></p>
+      <p><b>Fee Share (50%):</b> $<span id="feeShare">0</span></p>
+      <p><b>Net Amount Paid:</b> $<span id="netAmountPaid">0</span></p>
+      <p><b>Net Profit:</b> $<span id="netProfit">0</span></p>
+    </div>
+  </div>
+
+  <script>
+    function calculate() {
+      const weight = parseFloat(document.getElementById("weight").value) || 0;
+      const costPerUnit = parseFloat(document.getElementById("costPerUnit").value) || 0;
+      const markup = parseFloat(document.getElementById("markup").value) || 0;
+      const markupType = document.getElementById("markupType").value;
+      const feePercent = parseFloat(document.getElementById("feePercent").value) || 0;
+
+      // Total cost
+      const totalCost = weight * costPerUnit;
+
+      // Initial price (markup applied)
+      let initialPrice = 0;
+      if (markupType === "multiplier") {
+        initialPrice = totalCost * markup;
+      } else {
+        initialPrice = totalCost * (1 + markup / 100);
+      }
+
+      // Price per weight
+      const pricePerUnit = weight > 0 ? initialPrice / weight : 0;
+
+      // Transaction fee
+      const transactionFee = initialPrice * (feePercent / 100);
+
+      // Gross price
+      const grossPrice = initialPrice + transactionFee;
+
+      // Net revenue
+      const netRevenue = initialPrice - transactionFee;
+
+      // Fee share (50%)
+      const feeShare = transactionFee / 2;
+
+      // Net amount paid (cost + fee share)
+      const netAmountPaid = totalCost + feeShare;
+
+      // Net profit
+      const netProfit = netRevenue - netAmountPaid;
+
+      // Update results
+      document.getElementById("totalCost").innerText = totalCost.toFixed(2);
+      document.getElementById("initialPrice").innerText = initialPrice.toFixed(2);
+      document.getElementById("pricePerUnit").innerText = pricePerUnit.toFixed(4);
+      document.getElementById("transactionFee").innerText = transactionFee.toFixed(2);
+      document.getElementById("grossPrice").innerText = grossPrice.toFixed(2);
+      document.getElementById("netRevenue").innerText = netRevenue.toFixed(2);
+      document.getElementById("feeShare").innerText = feeShare.toFixed(2);
+      document.getElementById("netAmountPaid").innerText = netAmountPaid.toFixed(2);
+      document.getElementById("netProfit").innerText = netProfit.toFixed(2);
+    }
+  </script>
+</body>
+</html>
