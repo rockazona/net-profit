@@ -14,7 +14,7 @@
       text-align: center;
     }
     .calculator {
-      max-width: 500px;
+      max-width: 600px;
       margin: auto;
       padding: 20px;
       background: #fff;
@@ -56,6 +56,26 @@
     }
     .output p {
       margin: 5px 0;
+    }
+    table {
+      margin-top: 20px;
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background: #eee;
+    }
+    .clear-btn {
+      background: #dc3545;
+      margin-top: 10px;
+    }
+    .clear-btn:hover {
+      background: #a71d2a;
     }
   </style>
 </head>
@@ -100,11 +120,34 @@
       <p><b>Net Amount Paid:</b> $<span id="netAmountPaid">0</span></p>
       <p><b>Net Profit:</b> $<span id="netProfit">0</span></p>
     </div>
+
+    <!-- Results Table -->
+    <table id="resultsTable">
+      <thead>
+        <tr>
+          <th>Weight</th>
+          <th>Unit</th>
+          <th>Cost/Unit</th>
+          <th>Total Cost</th>
+          <th>Initial Price</th>
+          <th>Price/Unit</th>
+          <th>Fee</th>
+          <th>Gross Price</th>
+          <th>Net Revenue</th>
+          <th>Fee Share</th>
+          <th>Net Amount Paid</th>
+          <th>Net Profit</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button class="clear-btn" onclick="clearTable()">Clear Table</button>
   </div>
 
   <script>
     function calculate() {
       const weight = parseFloat(document.getElementById("weight").value) || 0;
+      const unit = document.getElementById("unit").value;
       const costPerUnit = parseFloat(document.getElementById("costPerUnit").value) || 0;
       const markup = parseFloat(document.getElementById("markup").value) || 0;
       const markupType = document.getElementById("markupType").value;
@@ -136,13 +179,13 @@
       // Fee share (50%)
       const feeShare = transactionFee / 2;
 
-      // Net amount paid (cost + fee share)
-      const netAmountPaid = totalCost + feeShare;
+      // Net amount paid (cost - fee share)
+      const netAmountPaid = totalCost - feeShare;
 
       // Net profit
       const netProfit = netRevenue - netAmountPaid;
 
-      // Update results
+      // Update results in display
       document.getElementById("totalCost").innerText = totalCost.toFixed(2);
       document.getElementById("initialPrice").innerText = initialPrice.toFixed(2);
       document.getElementById("pricePerUnit").innerText = pricePerUnit.toFixed(2);
@@ -152,6 +195,29 @@
       document.getElementById("feeShare").innerText = feeShare.toFixed(2);
       document.getElementById("netAmountPaid").innerText = netAmountPaid.toFixed(2);
       document.getElementById("netProfit").innerText = netProfit.toFixed(2);
+
+      // Add row to table
+      const tableBody = document.getElementById("resultsTable").querySelector("tbody");
+      const newRow = tableBody.insertRow();
+      newRow.innerHTML = `
+        <td>${weight}</td>
+        <td>${unit}</td>
+        <td>$${costPerUnit.toFixed(2)}</td>
+        <td>$${totalCost.toFixed(2)}</td>
+        <td>$${initialPrice.toFixed(2)}</td>
+        <td>$${pricePerUnit.toFixed(2)}</td>
+        <td>$${transactionFee.toFixed(2)}</td>
+        <td>$${grossPrice.toFixed(2)}</td>
+        <td>$${netRevenue.toFixed(2)}</td>
+        <td>$${feeShare.toFixed(2)}</td>
+        <td>$${netAmountPaid.toFixed(2)}</td>
+        <td>$${netProfit.toFixed(2)}</td>
+      `;
+    }
+
+    function clearTable() {
+      const tableBody = document.getElementById("resultsTable").querySelector("tbody");
+      tableBody.innerHTML = ""; // clear rows, keep headers
     }
   </script>
 </body>
